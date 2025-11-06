@@ -2,7 +2,7 @@ const form = document.getElementById("registration-form");
 const username = document.getElementById("username");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
-const confirmPassword = document.getElementById("confirmPassword");
+const confirmPassword = document.getElementById("confirm-password");
 
 form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -37,12 +37,12 @@ form.addEventListener("submit", function (e) {
 
 function checkLength (input, min, max) {
     if (input.value.length < min) {
-        showError(input, `${formatFieldName(input)} must be atleast (min) characters.`);
+    showError(input, `${formatFieldName(input)} must be at least ${min} characters.`);
 
         return false;
 
     } else if (input.value.length > max){
-        showError(input, `${formatFieldName(input)} must be at most (max) characters.`);
+    showError(input, `${formatFieldName(input)} must be at most ${max} characters.`);
 
         return false;
 
@@ -57,16 +57,16 @@ function checkLength (input, min, max) {
 
 
 function checkEmail (email) {
-    const emailRegex = /^[^\s0]+0[^\s0]+\,;^\s0]+s/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (emailRegex.test(email.valu.trim())) {
+    const value = email.value.trim();
+    if (emailRegex.test(value)) {
         showSuccess(email);
 
         return true;
 
     } else {
-        showError(email, "email is not valid")
-
+        showError(email, "Email is not valid");
         return false;
 
     }
@@ -80,8 +80,9 @@ function checkPasswordMatch (input1, input2) {
         return false;
 
     } else {
-
-        return true;
+    showSuccess(input2);
+    
+    return true;
 
     }
 }
@@ -90,7 +91,7 @@ function checkPasswordMatch (input1, input2) {
 function checkRequired (inputArray) {
     let isValid = true;
     
-    inputArray.array.forEach(input => {
+    inputArray.forEach(input => {
         if(input.value.trim() == "") {
             showError(input, `${formatFieldName(input)} is required`);
             isValid = false;
@@ -113,7 +114,7 @@ function formatFieldName (input) {
 
 function showError (input, message) {
     const formGroup = input.parentElement;
-    formGroup.className = "form-group err";
+    formGroup.className = "form-group error";
 
     const small = formGroup.querySelector("small");
     small.innerText = message;
@@ -121,7 +122,7 @@ function showError (input, message) {
 }
 
 
-function showSuccess () {
+function showSuccess (input) {
     const formGroup = input.parentElement;
     formGroup.className = "form-group success";
 }
