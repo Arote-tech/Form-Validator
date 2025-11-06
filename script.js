@@ -5,30 +5,30 @@ const password = document.getElementById("password");
 const confirmPassword = document.getElementById("confirmPassword");
 
 form.addEventListener("submit", function (e) {
-    e.preventDefault()
+    e.preventDefault();
 
-    const isRequiredValid = checkRequired([username, email, password, confirmPassword ])
+    const isRequiredValid = checkRequired([username, email, password, confirmPassword ]);
 
-    let isFormValid = isRequiredValid
+    let isFormValid = isRequiredValid;
 
     if (isRequiredValid) {
-        const isUsernameValid = checkLength(username, 3, 15)
-        const isEmailValid = checkEmail(email)
-        const isPasswordValid = checkLength(password, 6, 25) 
-        const isPasswordMatch = checkPasswordMatch(password, confirmPassword)
+        const isUsernameValid = checkLength(username, 3, 15);
+        const isEmailValid = checkEmail(email);
+        const isPasswordValid = checkLength(password, 6, 25);
+        const isPasswordMatch = checkPasswordMatch(password, confirmPassword);
 
 
         isFormValid = isUsernameValid && isEmailValid && isPasswordValid && isPasswordMatch;
     }
 
     if (isFormValid) {
-        alert("Registration successful")
+        alert("Registration successful");
 
-        form.reset()
+        form.reset();
 
         document.querySelectorAll(".form-group").forEach(group => {
-            group.className = "form-group"
-        })
+            group.className = "form-group";
+        });
     }
 
 })
@@ -37,20 +37,21 @@ form.addEventListener("submit", function (e) {
 
 function checkLength (input, min, max) {
     if (input.value.length < min) {
-        showError(input, `${formatFieldName(input)} must be atleast (min) characters.`)
+        showError(input, `${formatFieldName(input)} must be atleast (min) characters.`);
 
-        return false
+        return false;
 
     } else if (input.value.length > max){
-        showError(input, `${formatFieldName(input)} must be at most (max) characters.`)
+        showError(input, `${formatFieldName(input)} must be at most (max) characters.`);
 
-        return false
+        return false;
 
     } else {
-        showSuccess(input)
+        showSuccess(input);
 
-        return true
+        return true;
     }
+
 }
 
 
@@ -59,14 +60,14 @@ function checkEmail (email) {
     const emailRegex = /^[^\s0]+0[^\s0]+\,;^\s0]+s/;
 
     if (emailRegex.test(email.valu.trim())) {
-        showSuccess(email)
+        showSuccess(email);
 
-        return true
+        return true;
 
     } else {
         showError(email, "email is not valid")
 
-        return false
+        return false;
 
     }
 }
@@ -74,53 +75,53 @@ function checkEmail (email) {
 
 function checkPasswordMatch (input1, input2) {
     if (input1.value !== input2.value) {
-        showError(input2, "passwords do not match")
+        showError(input2, "passwords do not match");
 
-        return false
+        return false;
 
     } else {
 
-        return true
+        return true;
 
     }
 }
 
 
 function checkRequired (inputArray) {
-    let isValid = true
+    let isValid = true;
     
     inputArray.array.forEach(input => {
         if(input.value.trim() == "") {
-            showError(input, `${formatFieldName(input)} is required`)
-            invalid = false
+            showError(input, `${formatFieldName(input)} is required`);
+            isValid = false;
 
         } else {
-            showSuccess(input)
+            showSuccess(input);
         }
 
     });
 
-    return isValid 
+    return isValid;
 }
 
 
 function formatFieldName (input) {
-    return input.id.charAt(0).toUpperCase() + input.id.slice(1)
+    return input.id.charAt(0).toUpperCase() + input.id.slice(1);
 }
 
 
 
 function showError (input, message) {
-    const formGroup = input.parentElement
-    formGroup.className = "form-group err"
+    const formGroup = input.parentElement;
+    formGroup.className = "form-group err";
 
-    const small = formGroup.querySelector("small")
-    small.innerText = message
+    const small = formGroup.querySelector("small");
+    small.innerText = message;
 
 }
 
 
 function showSuccess () {
-    const formGroup = input.parentElement
-    formGroup.className = "form-group success"
+    const formGroup = input.parentElement;
+    formGroup.className = "form-group success";
 }
